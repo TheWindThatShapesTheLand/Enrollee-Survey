@@ -1,9 +1,10 @@
 import random
 import itertools
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 import requests
 
 app = Flask(__name__)
+app.secret_key = "mega_super_duper_secret_key"
 
 SHEETDB_URL = "https://sheetdb.io/api/v1/xzhn9ueu73152"
 
@@ -89,24 +90,27 @@ small_questions = [
 "Ты нашёл старый велосипед, который едет только туда, где человеку действительно интересно. Куда он тебя привезёт?"
 ]
 
-random_sample = random.sample(list(fpmm_fields.keys()), k=2)
-random_sample_permut = tuple(itertools.permutations(random_sample))
+def choose_random_questions():
+    random_sample = random.sample(list(fpmm_fields.keys()), k=2)
+    random_sample_permut = tuple(itertools.permutations(random_sample))
 
-for field in random_sample_permut:
-    if field in fpmm_big_questions.keys():
-        big_question_1 = random.choice(fpmm_big_questions[field])
-        field_1 = field
-        break
+    for field in random_sample_permut:
+        if field in fpmm_big_questions.keys():
+            big_question_1 = random.choice(fpmm_big_questions[field])
+            field_1 = field
+            break
 
-for field in fpmm_big_questions.keys():
-    if field[0] not in field_1 and field[1] not in field_1:
-        big_question_2 = random.choice(fpmm_big_questions[field])
-        field_2 = field
-        break
+    for field in fpmm_big_questions.keys():
+        if field[0] not in field_1 and field[1] not in field_1:
+            big_question_2 = random.choice(fpmm_big_questions[field])
+            field_2 = field
+            break
 
-list_questions = random.sample(small_questions, k=3)
-list_questions.insert(1, big_question_1)
-list_questions.insert(3, big_question_2)
+    list_questions = random.sample(small_questions, k=3)
+    list_questions.insert(1, big_question_1)
+    list_questions.insert(3, big_question_2)
+
+    return list_questions
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -134,10 +138,20 @@ def index():
             "success.html"
         )
 
+    if "questions" not in session:
+        session["questions"] = choose_random_questions()
+
     return render_template(
         "index.html",
-        questions=list_questions
+        questions=session["questions"]
     )
+
+@app.route("/restart")
+def restart():
+
+    session.pop("questions", None)
+
+    return redirect(url_for("index"))
 
 if __name__ == "__main__":
     app.run(debug=True)
