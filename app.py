@@ -1,10 +1,11 @@
 import random
 import itertools
 from flask import Flask, render_template, request
-import json
-import os
+import requests
 
 app = Flask(__name__)
+
+SHEETDB_URL = "https://sheetdb.io/api/v1/xzhn9ueu73152"
 
 fpmm_fields = {
     "Желание совершенствовать реальный мир": "01.03.02 Прикладная математика и информатика", 
@@ -109,20 +110,25 @@ list_questions.insert(3, big_question_2)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    answers = {}
-
     if request.method == "POST":
-        answers["Сколько тебе лет?"] = request.form["age"]
 
-        for i, question in enumerate(list_questions):
-            answers[question] = request.form.get(f"answer_{i}")
+        data = {
+            "data": {
+                "age": request.form["age"],
+                "question1": request.form.get(f"answer_0"),
+                "question2": request.form.get(f"answer_1"),
+                "question3": request.form.get(f"answer_2"),
+                "question4": request.form.get(f"answer_3"),
+                "question5": request.form.get(f"answer_4"),
+                "clearance" : request.form["clearance_rating"],
+                "interest" : request.form["interest_rating"]
+            }
+        }
 
-        answers["Оцени от 1 до 5, насколько вопросы выше были чёткими и понятными"] = request.form["clearance_rating"]
-        answers["Оцени от 1 до 5, насколько вопросы выше были интересными"] = request.form["interest_rating"]
-
-        a_num = len([f for f in os.listdir("answers") if os.path.isfile(os.path.join("answers", f))])
-        with open(f"answers/answer_{a_num}.json", "a", encoding="utf-8") as f:
-            json.dump(answers, f, ensure_ascii=False)
+        requests.post(
+            SHEETDB_URL,
+            json=data
+        )
 
         return render_template(
             "success.html"
@@ -132,7 +138,6 @@ def index():
         "index.html",
         questions=list_questions
     )
-
 
 if __name__ == "__main__":
     app.run(debug=True)
