@@ -115,17 +115,23 @@ def choose_random_questions():
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        questions = session.get("questions", [])
 
         data = {
             "data": {
                 "age": request.form["age"],
-                "question1": request.form.get(f"answer_0"),
-                "question2": request.form.get(f"answer_1"),
-                "question3": request.form.get(f"answer_2"),
-                "question4": request.form.get(f"answer_3"),
-                "question5": request.form.get(f"answer_4"),
-                "clearance" : request.form["clearance_rating"],
-                "interest" : request.form["interest_rating"]
+                "question1": questions[0],
+                "answer1": request.form.get(f"answer_0"),
+                "question2": questions[1],
+                "answer2": request.form.get(f"answer_1"),
+                "question3": questions[2],
+                "answer3": request.form.get(f"answer_2"),
+                "question4": questions[3],
+                "answer4": request.form.get(f"answer_3"),
+                "question5": questions[4],
+                "answer5": request.form.get(f"answer_4"),
+                "clearance": request.form["clearance_rating"],
+                "interest": request.form["interest_rating"]
             }
         }
 
