@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Опрос</title>
+
+    <style>
+    .big-button {
+        font-size: 24px;
+        padding: 15px 40px;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+
+<h1>Ответь на вопросы</h1>
+
+<form method="POST">
+
+    <h3>Сколько тебе лет?</h3>
+    <select name="clearance_rating">
+
+        <option value="0">-</option>
+        <option value="1">Меньше 14</option>
+        <option value="2">14-16</option>
+        <option value="3">17-18</option>
+        <option value="4">19+</option>
+
+    </select>
+
+    <br><br>
+    {% for question in questions %}
+
+        <h3>{{ question }}</h3>
+        <input type="text"
+               name="answer_{{ loop.index0 }}"
+               required>
+
+        <br><br>
+
+    {% endfor %}
+
+    <h3>Оцени от 1 до 5, насколько вопросы выше были чёткими и понятными</h3>
+    <select name="clearance_rating">
+
+        <option value="0">-</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+
+    </select>
+
+    <br><br>
+    <h3>Оцени от 1 до 5, насколько вопросы выше были интересными</h3>
+    <select name="interest_rating">
+
+        <option value="0">-</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+
+    </select>
+    <br><br>
+
+    <button type="submit" class="big-button">
+        Отправить
+    </button>
+
+</form>
+</body>
+</html>
