@@ -2,7 +2,6 @@ import random
 import itertools
 from flask import Flask, render_template, request, session, redirect, url_for
 import requests
-import uuid
 
 app = Flask(__name__)
 app.secret_key = "mega_super_duper_secret_key"
@@ -113,21 +112,13 @@ def choose_random_questions():
 
     return list_questions
 
-@app.before_request
-def set_user_id():
-
-    if "user_id" not in session:
-        session["user_id"] = str(uuid.uuid4())
-
 @app.route("/", methods=["GET", "POST"])
 def index():
-
     if request.method == "POST":
         questions = session.get("questions", [])
 
         data = {
             "data": {
-                "id": session["user_id"],
                 "age": request.form["age"],
                 "question1": questions[0],
                 "answer1": request.form.get(f"answer_0"),
