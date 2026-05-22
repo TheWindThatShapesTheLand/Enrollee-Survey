@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Спасибо</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-<h1>Спасибо за ответы! 🎉</h1>
-
-<a href="/restart">
-    <button>
-        Пройти заново
-    </button>
-</a>
+<main class="page">
+    <div class="card success">
+        <p class="success__emoji" aria-hidden="true">🎉</p>
+        <h1 class="page__title">Спасибо за ответы!</h1>
+        <p class="page__subtitle">Твои ответы сохранены</p>
+        <div class="actions">
+            <a href="/restart" class="btn">Пройти заново</a>
+        </div>
+    </div>
+</main>
 
 </body>
 </html>

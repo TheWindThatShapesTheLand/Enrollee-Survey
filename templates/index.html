@@ -1,77 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Опрос</title>
-
-    <style>
-    .big-button {
-        font-size: 24px;
-        padding: 15px 40px;
-        border-radius: 12px;
-        border: none;
-        cursor: pointer;
-    }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-<h1>Ответь на вопросы</h1>
+<main class="page">
+    <header class="page__header">
+        <h1 class="page__title">Ответь на вопросы</h1>
+        <p class="page__subtitle">Займёт несколько минут</p>
+    </header>
 
-<form method="POST">
+    <form method="POST" class="survey card">
 
-    <h3>Сколько тебе лет?</h3>
-    <select name="age">
+        <div class="field">
+            <label class="field__label" for="age">Сколько тебе лет?</label>
+            <select class="field__select" id="age" name="age">
+                <option value="-">—</option>
+                <option value="Меньше 14">Меньше 14</option>
+                <option value="14-16">14-16</option>
+                <option value="17-18">17-18</option>
+                <option value="19+">19+</option>
+            </select>
+        </div>
 
-        <option value="-">-</option>
-        <option value="Меньше 14">Меньше 14</option>
-        <option value="14-16">14-16</option>
-        <option value="17-18">17-18</option>
-        <option value="19+">19+</option>
+        {% for question in questions %}
+        <div class="field">
+            <label class="field__label" for="answer_{{ loop.index0 }}">{{ question }}</label>
+            <textarea class="field__input"
+                      id="answer_{{ loop.index0 }}"
+                      name="answer_{{ loop.index0 }}"
+                      rows="3"
+                      required></textarea>
+        </div>
+        {% endfor %}
 
-    </select>
+        <div class="field">
+            <label class="field__label" for="clearance_rating">Оцени от 1 до 5, насколько вопросы выше были чёткими и понятными</label>
+            <select class="field__select" id="clearance_rating" name="clearance_rating">
+                <option value="-">—</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
 
-    <br><br>
-    {% for question in questions %}
+        <div class="field">
+            <label class="field__label" for="interest_rating">Оцени от 1 до 5, насколько вопросы выше были интересными</label>
+            <select class="field__select" id="interest_rating" name="interest_rating">
+                <option value="-">—</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
 
-        <h3>{{ question }}</h3>
-        <input type="text"
-               name="answer_{{ loop.index0 }}"
-               required>
+        <div class="actions">
+            <button type="submit" class="btn">Отправить</button>
+        </div>
 
-        <br><br>
+    </form>
+</main>
 
-    {% endfor %}
-
-    <h3>Оцени от 1 до 5, насколько вопросы выше были чёткими и понятными</h3>
-    <select name="clearance_rating">
-
-        <option value="-">-</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-
-    </select>
-
-    <br><br>
-    <h3>Оцени от 1 до 5, насколько вопросы выше были интересными</h3>
-    <select name="interest_rating">
-
-        <option value="-">-</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-
-    </select>
-    <br><br>
-
-    <button type="submit" class="big-button">
-        Отправить
-    </button>
-
-</form>
 </body>
 </html>
