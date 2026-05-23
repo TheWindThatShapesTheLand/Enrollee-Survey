@@ -142,6 +142,9 @@ def index():
 
         session["questions"] = choose_random_questions()
 
+        response = make_response(render_template("index.html", questions=session["questions"]))
+        response.headers["Cache-Control"] = "no-store"
+
         return redirect(url_for("success"))
 
     if "questions" not in session:
