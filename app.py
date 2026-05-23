@@ -140,6 +140,8 @@ def index():
             json=data
         )
 
+        session["questions"] = choose_random_questions()
+
         return redirect(url_for("success"))
 
     if "questions" not in session:
@@ -156,9 +158,6 @@ def success():
     
 @app.route("/restart")
 def restart():
-
-    session.pop("questions", None)
-
     return redirect(url_for("index"))
 
 if __name__ == "__main__":
