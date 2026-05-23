@@ -142,10 +142,9 @@ def index():
 
         session["questions"] = choose_random_questions()
 
-        response = make_response(render_template("index.html", questions=session["questions"]))
-        response.headers["Cache-Control"] = "no-store"
+        response = redirect(url_for("success"))
 
-        return redirect(url_for("success"))
+        return response
 
     if "questions" not in session:
         session["questions"] = choose_random_questions()
@@ -157,11 +156,15 @@ def index():
     
 @app.route("/success")
 def success():
-    return render_template("success.html")
+    response = make_response(render_template("success.html"))
+    response.headers["Cache-Control"] = "no-store"
+
+    return response
     
 @app.route("/restart")
 def restart():
-    return redirect(url_for("index"))
+    response = redirect(url_for("index"))
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True)
