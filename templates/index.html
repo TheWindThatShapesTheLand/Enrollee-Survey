@@ -98,6 +98,20 @@ document.getElementById("quiz-form").addEventListener("submit", () => {
     localStorage.clear();
 
 });
+
+window.addEventListener("pageshow", function(event) {
+
+    // если страница восстановлена из кеша браузера
+    if (event.persisted) {
+
+        // очищаем форму
+        document.getElementById("quiz-form").reset();
+
+        // очищаем localStorage
+        localStorage.clear();
+    }
+
+});
 </script>
 
 </body>
