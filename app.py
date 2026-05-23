@@ -140,9 +140,7 @@ def index():
             json=data
         )
 
-        return render_template(
-            "success.html"
-        )
+        return redirect(url_for("success"))
 
     if "questions" not in session:
         session["questions"] = choose_random_questions()
@@ -151,7 +149,11 @@ def index():
         "index.html",
         questions=session["questions"]
     )
-
+    
+@app.route("/success")
+def success():
+    return render_template("success.html")
+    
 @app.route("/restart")
 def restart():
 
