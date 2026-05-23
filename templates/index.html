@@ -11,7 +11,7 @@
 <main class="page">
     <header class="page__header">
         <h1 class="page__title">Ответь на вопросы</h1>
-        <p class="page__subtitle">Займёт несколько минут</p>
+        <p class="page__subtitle">Это займёт несколько минут</p>
     </header>
 
     <form method="POST" class="survey card">
@@ -39,7 +39,7 @@
         {% endfor %}
 
         <div class="field">
-            <label class="field__label" for="clearance_rating">Оцени от 1 до 5, насколько вопросы выше были чёткими и понятными</label>
+            <label class="field__label" for="clearance_rating">Оцени, насколько формулировка вопросов выше была чёткой и понятной.</label>
             <select class="field__select" id="clearance_rating" name="clearance_rating">
                 <option value="-">—</option>
                 <option value="1">1</option>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="field">
-            <label class="field__label" for="interest_rating">Оцени от 1 до 5, насколько вопросы выше были интересными</label>
+            <label class="field__label" for="interest_rating">Оцени, насколько отвечать на вопросы выше было интересно.</label>
             <select class="field__select" id="interest_rating" name="interest_rating">
                 <option value="-">—</option>
                 <option value="1">1</option>
