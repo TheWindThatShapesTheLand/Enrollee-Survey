@@ -71,24 +71,27 @@
     
 <script>
     
-const inputs = document.querySelectorAll("textarea");
-inputs.forEach(input => {
+const fields = document.querySelectorAll("input, textarea, select");
 
-    input.value = localStorage.getItem(input.id) || "";
 
-    input.addEventListener("input", () => {
-        localStorage.setItem(input.id, input.value);
-    });
+fields.forEach(field => {
+
+    const saved = localStorage.getItem(field.id);
+
+    if (saved !== null) {
+        field.value = saved;
+    }
 
 });
 
-const selects = document.querySelectorAll("select");
-selects.forEach(select => {
+fields.forEach(field => {
 
-    select.value = localStorage.getItem(select.id) || "";
+    field.addEventListener("input", () => {
+        localStorage.setItem(field.id, field.value);
+    });
 
-    select.addEventListener("change", () => {
-        localStorage.setItem(select.id, select.value);
+    field.addEventListener("change", () => {
+        localStorage.setItem(field.id, field.value);
     });
 
 });
@@ -98,7 +101,6 @@ document.getElementById("quiz-form").addEventListener("submit", () => {
     localStorage.clear();
 
 });
-    
 </script>
 
 </body>
