@@ -70,8 +70,8 @@
 </main>
     
 <script>
+    
 const inputs = document.querySelectorAll("input[type='text']");
-
 inputs.forEach(input => {
 
     input.value = localStorage.getItem(input.id) || "";
@@ -81,6 +81,18 @@ inputs.forEach(input => {
     });
 
 });
+
+const selects = document.querySelectorAll("select");
+selects.forEach(select => {
+
+    select.value = localStorage.getItem(select.id) || "";
+
+    select.addEventListener("change", () => {
+        localStorage.setItem(select.id, select.value);
+    });
+
+});
+    
 </script>
 
 </body>
