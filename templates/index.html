@@ -71,27 +71,24 @@
     
 <script>
     
-const fields = document.querySelectorAll("input, textarea, select");
+const inputs = document.querySelectorAll("textarea");
+inputs.forEach(input => {
 
+ input.value = localStorage.getItem(input.id) || "";
 
-fields.forEach(field => {
-
-    const saved = localStorage.getItem(field.id);
-
-    if (saved !== null) {
-        field.value = saved;
-    }
-
+    input.addEventListener("input", () => {
+        localStorage.setItem(input.id, input.value);
+    });
+    
 });
 
-fields.forEach(field => {
+const selects = document.querySelectorAll("select");
+selects.forEach(select => {
 
-    field.addEventListener("input", () => {
-        localStorage.setItem(field.id, field.value);
-    });
+ select.value = localStorage.getItem(select.id) || "";
 
-    field.addEventListener("change", () => {
-        localStorage.setItem(field.id, field.value);
+    select.addEventListener("change", () => {
+        localStorage.setItem(select.id, select.value);
     });
 
 });
