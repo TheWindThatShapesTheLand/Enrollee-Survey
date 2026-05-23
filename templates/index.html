@@ -14,7 +14,7 @@
         <p class="page__subtitle">Это займёт несколько минут</p>
     </header>
 
-    <form method="POST" class="survey card">
+    <form id="quiz-form" method="POST">
 
         <div class="field">
             <label class="field__label" for="age">Сколько тебе лет?</label>
@@ -90,6 +90,12 @@ selects.forEach(select => {
     select.addEventListener("change", () => {
         localStorage.setItem(select.id, select.value);
     });
+
+});
+
+document.getElementById("quiz-form").addEventListener("submit", () => {
+
+    localStorage.clear();
 
 });
     
