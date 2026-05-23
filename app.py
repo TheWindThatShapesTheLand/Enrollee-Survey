@@ -1,6 +1,6 @@
 import random
 import itertools
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for,  make_response
 import requests
 
 app = Flask(__name__)
@@ -145,10 +145,10 @@ def index():
     if "questions" not in session:
         session["questions"] = choose_random_questions()
 
-    return render_template(
-        "index.html",
-        questions=session["questions"]
-    )
+    response = make_response(render_template("index.html", questions=session["questions"]))
+    response.headers["Cache-Control"] = "no-store"
+
+    return response
     
 @app.route("/success")
 def success():
