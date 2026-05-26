@@ -71,6 +71,16 @@
     
 <script>
     
+document.getElementById("quiz-form").addEventListener("submit", function() {
+
+    const button = document.getElementById("submit-button");
+
+    button.disabled = true;
+
+    button.innerText = "Отправка...";
+
+});
+    
 const inputs = document.querySelectorAll("textarea");
 inputs.forEach(input => {
 
