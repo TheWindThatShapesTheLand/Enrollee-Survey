@@ -59,38 +59,41 @@ def get_recommendation(questions, answers):
             "comment": Возьми лучшие качества у абитуриента из рекомендованного направления+профиля и распиши на основе ответов, почему он ими обладает и почему ему подходит это направление+профиль. Помни, что ты отвечаешь несовершеннолетнему подростку! В комментарии не используй грубые и обидные слова. Не здоровайся.
             }}
         '''
-    for i in range(3):
-        if i == 0:
-            API_KEY = os.environ["GEMINI_API_KEY_1"]
-        elif i == 1:
-            API_KEY = os.environ["GEMINI_API_KEY_2"]
-        elif i == 2:
-            API_KEY = os.environ["GEMINI_API_KEY_3"]
-
-        try:
-            client = genai.Client(http_options={'api_version': 'v1beta'}, api_key=API_KEY)
-            config = types.GenerateContentConfig(
-                thinking_config=types.ThinkingConfig(
-                    thinking_level="high"
-                ),
-                response_mime_type='application/json',
-                response_schema=Top3List
-            )
-
-            response = client.models.generate_content(
-                model="gemini-3.5-flash",
-                contents=prompt,
-                config=config
-            )
-            break
-            
-        except Exception as e:
-
-            if i == 2:
-                raise
+    working = True
+    count = 0
+    while working:
+        for i in range(3):
+            if i == 0:
+                API_KEY = os.environ["GEMINI_API_KEY_1"]
+            elif i == 1:
+                API_KEY = os.environ["GEMINI_API_KEY_2"]
+            elif i == 2:
+                API_KEY = os.environ["GEMINI_API_KEY_3"]
     
-            time.sleep(5)
-            continue
+            try:
+                client = genai.Client(http_options={'api_version': 'v1beta'}, api_key=API_KEY)
+                config = types.GenerateContentConfig(
+                    thinking_config=types.ThinkingConfig(
+                        thinking_level="high"
+                    ),
+                    response_mime_type='application/json',
+                    response_schema=Top3List
+                )
+    
+                response = client.models.generate_content(
+                    model="gemini-3.5-flash",
+                    contents=prompt,
+                    config=config
+                )
+                working = False
+                break
+                
+            except Exception as e:
+                count+=1
+                if count == 12:
+                    raise
+                time.sleep(2)
+                continue
 
     validated_data = Top3List.model_validate_json(response.text)
     llm_response = validated_data.to_dict()
