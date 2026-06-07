@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from google.genai import types
 from google import genai
+import os
 
 class FieldRec(BaseModel):
     recommendation: str = Field(description="Рекомендованное направление и профиль")
