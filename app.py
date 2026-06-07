@@ -128,29 +128,6 @@ def index():
                 request.form.get("answer_4")
             ]
 
-        data = {
-            "data": {
-                "age": request.form["age"],
-                "question1": questions[0],
-                "answer1": answers[0],
-                "question2": questions[1],
-                "answer2": answers[1],
-                "question3": questions[2],
-                "answer3": answers[2],
-                "question4": questions[3],
-                "answer4": answers[3],
-                "question5": questions[4],
-                "answer5": answers[4],
-                "clearance": request.form["clearance_rating"],
-                "interest": request.form["interest_rating"]
-            }
-        }
-
-        requests.post(
-            SHEETDB_URL,
-            json=data
-        )
-
         try:
 
             recommendation = get_recommendation(
@@ -176,6 +153,30 @@ def index():
                     "comment": ""
                 }
             }
+
+        data = {
+            "data": {
+                "age": request.form["age"],
+                "question1": questions[0],
+                "answer1": answers[0],
+                "question2": questions[1],
+                "answer2": answers[1],
+                "question3": questions[2],
+                "answer3": answers[2],
+                "question4": questions[3],
+                "answer4": answers[3],
+                "question5": questions[4],
+                "answer5": answers[4],
+                "clearance": request.form["clearance_rating"],
+                "interest": request.form["interest_rating"],
+                "llm_recommendation": session["recommendation"]
+            }
+        }
+
+        requests.post(
+            SHEETDB_URL,
+            json=data
+        )
 
         session["questions"] = choose_random_questions()
 
