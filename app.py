@@ -3,11 +3,12 @@ import itertools
 from flask import Flask, render_template, request, session, redirect, url_for, make_response
 import requests
 from recommendation import get_recommendation
+import os
 
 app = Flask(__name__)
 app.secret_key = "mega_super_duper_secret_key"
 
-SHEETDB_URL = "https://sheetdb.io/api/v1/xzhn9ueu73152"
+SHEETDB_URL = os.environ["SHEETDB_URL"]
 
 fpmm_fields = {
     "Желание совершенствовать реальный мир": "01.03.02 Прикладная математика и информатика",
