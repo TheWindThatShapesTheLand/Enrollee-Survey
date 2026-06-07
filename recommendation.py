@@ -1,7 +1,9 @@
 from pydantic import BaseModel, Field
 from google.genai import types
 from google import genai
+import time
 import os
+
 
 class FieldRec(BaseModel):
     recommendation: str = Field(description="Рекомендованное направление и профиль")
@@ -19,7 +21,6 @@ class Top3List(BaseModel):
             2: self.place_2,
             3: self.place_3
         }
-
 
 
 def get_recommendation(questions, answers):
@@ -68,27 +69,28 @@ def get_recommendation(questions, answers):
 
         try:
             client = genai.Client(http_options={'api_version': 'v1beta'}, api_key=API_KEY)
+            config = types.GenerateContentConfig(
+                thinking_config=types.ThinkingConfig(
+                    thinking_level="high"
+                ),
+                response_mime_type='application/json',
+                response_schema=Top3List
+            )
+
+            response = client.models.generate_content(
+                model="gemini-3.5-flash",
+                contents=prompt,
+                config=config
+            )
             break
+            
         except Exception as e:
+
+            if i == 2:
+                raise
+    
+            time.sleep(5)
             continue
-
-    try:
-        config = types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(
-                thinking_level="high"
-            ),
-            response_mime_type='application/json',
-            response_schema=Top3List
-        )
-
-        response = client.models.generate_content(
-            model="gemini-3.5-flash",
-            contents=prompt,
-            config=config
-        )
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        exit()
 
     validated_data = Top3List.model_validate_json(response.text)
     llm_response = validated_data.to_dict()
