@@ -141,8 +141,8 @@ def index():
 
             session["recommendation"] = {
                 "1":{
-                "recommendation": "Рекомендация временно недоступна",
-                "comment": "Попробуйте позже."
+                    "recommendation": "Рекомендация временно недоступна",
+                    "comment": "Попробуйте позже."
                 },
                 "2":{
                     "recommendation": "",
