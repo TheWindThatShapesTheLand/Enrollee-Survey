@@ -8,7 +8,7 @@ import os
 app = Flask(__name__)
 
 SHEETDB_URL = os.environ["SHEETDB_URL"]
-app.secret_key = "mega_super_duper_secret_key"
+app.secret_key = os.environ["APP_SECRET_KEY"]
 
 fpmm_fields = {
     "Желание совершенствовать реальный мир": "01.03.02 Прикладная математика и информатика",
