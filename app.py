@@ -6,7 +6,6 @@ import random
 import os
 
 app = Flask(__name__)
-app.secret_key = "mega_super_duper_secret_key"
 
 SHEETDB_URL = os.environ["SHEETDB_URL"]
 
