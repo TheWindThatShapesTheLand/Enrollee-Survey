@@ -154,6 +154,16 @@ def index():
                 }
             }
 
+        recommendation_text = ""
+
+        for place, rec in session["recommendation"].items():
+        
+            recommendation_text += (
+                f"Топ {place}\n"
+                f"{rec['recommendation']}\n"
+                f"{rec['comment']}\n\n"
+            )
+
         data = {
             "data": {
                 "age": request.form["age"],
@@ -169,7 +179,7 @@ def index():
                 "answer5": answers[4],
                 "clearance": request.form["clearance_rating"],
                 "interest": request.form["interest_rating"],
-                "llm_recommendation": session["recommendation"]
+                "llm_recommendation": recommendation_text
             }
         }
 
