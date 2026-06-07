@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Рекомендация</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<main class="page">
+
+    <header class="page__header">
+        <h1 class="page__title">
+            Рекомендованные направления
+        </h1>
+
+        <p class="page__subtitle">
+            На основе твоих ответов
+        </p>
+    </header>
+
+    <div class="recommendation-list">
+
+        {% for place, rec in result.items() %}
+
+        <div class="recommendation-card">
+
+            <div class="recommendation-card__place">
+                Топ {{ place }}
+            </div>
+
+            <h2 class="recommendation-card__title">
+                {{ rec.recommendation }}
+            </h2>
+
+            <p class="recommendation-card__comment">
+                {{ rec.comment }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="actions actions--stack" style="margin-top: 1.5rem;">
+
+        <a href="/restart" class="btn">
+            Пройти заново
+        </a>
+
+    </div>
+
+</main>
+
+</body>
+</html>
