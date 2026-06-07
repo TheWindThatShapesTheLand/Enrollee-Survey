@@ -171,3 +171,56 @@ body {
         width: auto;
     }
 }
+
+.recommendation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.recommendation-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: var(--space-lg);
+}
+
+.recommendation-card__place {
+    margin: 0 0 0.5rem;
+    color: var(--accent);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.recommendation-card__title {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.recommendation-card__comment {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.actions--stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.actions--stack .btn {
+    width: 100%;
+}
+
+.btn-secondary {
+    background: #6b7280;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+    background: #4b5563;
+}
