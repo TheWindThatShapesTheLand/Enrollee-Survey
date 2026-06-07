@@ -1,8 +1,8 @@
-import random
-import itertools
 from flask import Flask, render_template, request, session, redirect, url_for, make_response
-import requests
 from recommendation import get_recommendation
+import itertools
+import requests
+import random
 import os
 
 app = Flask(__name__)
