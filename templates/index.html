@@ -68,55 +68,55 @@
 
     </form>
 </main>
-    
+
 <script>
-    
-document.getElementById("quiz-form").addEventListener("submit", function() {
 
-    const button = document.getElementById("submit-button");
+    document.getElementById("quiz-form").addEventListener("submit", function() {
 
-    button.disabled = true;
+        const button = document.getElementById("submit-button");
 
-    button.innerText = "Отправка...";
+        button.disabled = true;
 
-});
-    
-const inputs = document.querySelectorAll("textarea");
-inputs.forEach(input => {
+        button.innerText = "Отправка...";
 
- input.value = localStorage.getItem(input.id) || "";
-
-    input.addEventListener("input", () => {
-        localStorage.setItem(input.id, input.value);
-    });
-    
-});
-
-const selects = document.querySelectorAll("select");
-selects.forEach(select => {
-
- select.value = localStorage.getItem(select.id) || "";
-
-    select.addEventListener("change", () => {
-        localStorage.setItem(select.id, select.value);
     });
 
-});
+    const inputs = document.querySelectorAll("textarea");
+    inputs.forEach(input => {
 
-document.getElementById("quiz-form").addEventListener("submit", () => {
+     input.value = localStorage.getItem(input.id) || "";
 
-    localStorage.clear();
+        input.addEventListener("input", () => {
+            localStorage.setItem(input.id, input.value);
+        });
 
-});
+    });
 
-window.addEventListener("pageshow", function(event) {
+    const selects = document.querySelectorAll("select");
+    selects.forEach(select => {
 
-    if (event.persisted) {
+     select.value = localStorage.getItem(select.id) || "";
 
-        document.getElementById("quiz-form").reset();
+        select.addEventListener("change", () => {
+            localStorage.setItem(select.id, select.value);
+        });
+
+    });
+
+    document.getElementById("quiz-form").addEventListener("submit", () => {
 
         localStorage.clear();
-    }
+
+    });
+
+    window.addEventListener("pageshow", function(event) {
+
+        if (event.persisted) {
+
+            document.getElementById("quiz-form").reset();
+
+            localStorage.clear();
+        }
 
 });
 </script>
